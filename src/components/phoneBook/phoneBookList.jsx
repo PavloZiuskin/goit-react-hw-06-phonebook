@@ -1,21 +1,30 @@
-import PropTypes from 'prop-types';
+
+import { useSelector } from 'react-redux';
+import { getContacts, getFilter } from "redux/selectors"
 import { ContactsItem } from 'components/phoneBookItem/phoneBookItem' 
-export const ContactsList = ({ contacts, onClick }) => {
+export const ContactsList = () => {
+    const contacts = useSelector(getContacts);
+    const filterValue = useSelector(getFilter);
+    const workFilter = () => {
+        if (contacts.contacts.length === 0) {
+            return;
+        } else {
+            const normalizedFilter = filterValue.toLowerCase();
+            const filteredContacts = contacts.filter(contact =>
+            contact.name.toLowerCase().includes(normalizedFilter)
+        );
+        return filteredContacts;}
+    };
     return (
         <section>
-            
-            <ul>
-                {contacts.map(contact => (
+            {contacts.contacts.length !== 0 && <ul>
+                {workFilter().map(contact => (
                     <li key={contact.id}>
                     <ContactsItem
                         item={contact}
-                        onClick={onClick}
                     /></li>))}
-            </ul>
+            </ul>}
+            
         </section>
     )
 }
-ContactsList.propTypes = {
-    contacts: PropTypes.array.isRequired,
-    onClick: PropTypes.func.isRequired
-} 

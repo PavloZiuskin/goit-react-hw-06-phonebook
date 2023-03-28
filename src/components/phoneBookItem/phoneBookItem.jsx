@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types'; 
+import { useDispatch } from 'react-redux';
+import { deleteContact } from 'redux/slice';
 import { Container } from "components/phoneBookItem/phoneItem.styled"
-export const ContactsItem = ({ item, onClick }) => {
+export const ContactsItem = ({ item}) => {
+    const dispatch = useDispatch();
     return (<Container>
         <span>{item.name}: {item.number}</span>
-                <button type="button" onClick={()=>{onClick(item.id)}}>delete</button>
+                <button type="button" onClick={()=>dispatch(deleteContact(item.id))}>delete</button>
     </Container>)
 }
 
@@ -13,5 +16,4 @@ ContactsItem.propTypes = {
         number: PropTypes.string.isRequired,
         id: PropTypes.string.isRequired,}
     ),
-    onClick: PropTypes.func.isRequired
 } 
