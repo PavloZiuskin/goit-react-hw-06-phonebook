@@ -7,9 +7,7 @@ export const Filter = () => {
   const dispatch = useDispatch();
   const value = useSelector(getFilter);
   function handleChange(e) {
-    const text = e.target.value;
-    dispatch(filterContacts(text))
-
+    dispatch(filterContacts(e.target.value))
   }
   return (
     <LabelFilter>
